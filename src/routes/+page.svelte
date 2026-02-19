@@ -12,6 +12,10 @@
 	let positions = genPositions();
 	let parenXShift = 50;
 	let parenYShift = 20;
+
+	let floatActive = true;
+	let interval: ReturnType<typeof setTimeout>;
+	let ms: MouseTracker | undefined;
 	let tweenLeft = new Tween([0, 0], {
 		duration: 1500,
 		easing: expoOut
@@ -22,18 +26,33 @@
 		delay: 90
 	});
 
+	function float(alt: number) {
+		if (!floatActive) {
+			return;
+		}
+
+		tweenLeft.set([0, -1 * alt], { duration: 5000 });
+		tweenRight.set([0, -1 * alt], { duration: 5000 });
+
+		interval = setTimeout(() => float(alt * -1), 2000);
+	}
+
 	onMount(() => {
-		let ms = new MouseTracker({
+		ms = new MouseTracker({
 			threshold: 100,
 			window: 100,
 			onForce: ({ x, y }) => {
+				floatActive = false;
 				tweenLeft.set([x, y]);
 				tweenRight.set([x, y]);
 			}
 		});
 
+		setTimeout(() => float(1), 2000);
+
 		return () => {
-			ms.destroy();
+			ms?.destroy();
+			clearTimeout(interval);
 		};
 	});
 </script>
@@ -41,12 +60,7 @@
 <div class="wrapper">
 	<svg class="svg">
 		{#each positions as pos, idx (idx)}
-			<rect
-				x="{pos.x}%"
-				y="{pos.y}%"
-				class="rect"
-				style="--delay: {pos.delay}s"
-			></rect>
+			<rect x="{pos.x}%" y="{pos.y}%" class="rect"></rect>
 		{/each}
 	</svg>
 
@@ -204,12 +218,8 @@
 			fill: var(--brand-pink);
 			width: 40px;
 			height: 40px;
-			opacity: 0;
 
 			translate: -4vmin;
-
-			animation: blockIn 0.1s forwards;
-			animation-delay: var(--delay);
 
 			@media (min-width: 1440px) {
 				width: 80px;
