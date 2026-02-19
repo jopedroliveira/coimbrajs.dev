@@ -4,6 +4,36 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		%sveltekit.head%
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "Event",
+			"name": "Coimbra.js Meetup",
+			"description": "A JavaScript community meetup in Coimbra, Portugal. Free admission. Talks and networking powered by Subvisual, Remote Crew, and Pink Room.",
+			"startDate": "2026-02-24T18:45:00+00:00",
+			"endDate": "2026-02-24T20:30:00+00:00",
+			"eventStatus": "https://schema.org/EventScheduled",
+			"eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+			"location": {
+				"@type": "Place",
+				"name": "Pink Room",
+				"address": {
+					"@type": "PostalAddress",
+					"streetAddress": "R. Casal de Vagares 15, 2nd floor",
+					"addressLocality": "Coimbra",
+					"postalCode": "3030-141",
+					"addressCountry": "PT"
+				}
+			},
+			"organizer": [
+				{ "@type": "Organization", "name": "Subvisual", "url": "https://subvisual.com" },
+				{ "@type": "Organization", "name": "Remote Crew" },
+				{ "@type": "Organization", "name": "Pink Room" }
+			],
+			"isAccessibleForFree": true,
+			"url": "https://coimbrajs.dev"
+		}
+		</script>
 	</head>
 	<body data-sveltekit-preload-data="hover">
 		<div style="display: contents">%sveltekit.body%</div>
