@@ -4,22 +4,71 @@
 	import paren_left from '$lib/assets/paren_left.svg';
 	import paren_right from '$lib/assets/paren_right.svg';
 	import { genPositions } from '$lib/utils';
+	import { onMount } from 'svelte';
+	import { MouseTracker } from '$lib/mouse-tracker';
+	import { Tween } from 'svelte/motion';
+	import { expoOut } from 'svelte/easing';
 
 	let positions = genPositions();
+	let parenXShift = 50;
+	let parenYShift = 20;
+	let tweenLeft = new Tween([0, 0], {
+		duration: 1500,
+		easing: expoOut
+	});
+	let tweenRight = new Tween([0, 0], {
+		duration: 1500,
+		easing: expoOut,
+		delay: 90
+	});
+
+	onMount(() => {
+		let ms = new MouseTracker({
+			threshold: 100,
+			window: 100,
+			onForce: ({ x, y }) => {
+				tweenLeft.set([x, y]);
+				tweenRight.set([x, y]);
+			}
+		});
+
+		return () => {
+			ms.destroy();
+		};
+	});
 </script>
 
 <div class="wrapper">
 	<svg class="svg">
 		{#each positions as pos, idx (idx)}
-			<rect x="{pos.x}%" y="{pos.y}%" class="rect"></rect>
+			<rect
+				x="{pos.x}%"
+				y="{pos.y}%"
+				class="rect"
+				style="--delay: {pos.delay}s"
+			></rect>
 		{/each}
 	</svg>
 
 	<div class="main">
 		<div class="branding">
-			<img src={paren_left} alt="(" class="paren" />
+			<img
+				src={paren_left}
+				alt="("
+				class="paren"
+				style="--x-factor: {tweenLeft.current[0] *
+					parenXShift}px; --y-factor: {tweenLeft.current[1] *
+					parenYShift}px"
+			/>
 			<img src={logo} alt="Coimbra.js" class="logo" />
-			<img src={paren_right} alt=")" class="paren" />
+			<img
+				src={paren_right}
+				alt=")"
+				class="paren"
+				style="--x-factor: {tweenRight.current[0] *
+					parenXShift}px; --y-factor: {tweenRight.current[1] *
+					parenYShift}px"
+			/>
 		</div>
 
 		<iframe
@@ -81,18 +130,23 @@
 		@media (min-width: 1440px) {
 			margin-bottom: 20px;
 		}
+
+		@media (min-width: 1940px) {
+			margin-bottom: 40px;
+		}
 	}
 
 	.logo {
 		max-width: 90%;
-		width: 580px;
+		width: 520px;
 		margin: 20px 0 20px 0;
 
 		@media (min-width: 1000px) {
-			margin: 0 20px;
+			margin: 0 20px 10px;
 		}
 
 		@media (min-width: 1440px) {
+			width: 590px;
 			margin: 40px 20px;
 		}
 	}
@@ -100,6 +154,8 @@
 	.paren {
 		width: 0px;
 		position: absolute;
+
+		--x-offset: 120px;
 
 		@media (min-width: 1000px) {
 			width: 130px;
@@ -109,16 +165,32 @@
 			width: 150px;
 		}
 
+		@media (min-width: 1940px) {
+			width: 160px;
+			--x-offset: 160px;
+		}
+
 		&:first-of-type {
 			left: 0;
 			rotate: -3deg;
-			translate: -120px 10%;
+			translate: calc(var(--x-offset) * -1 + var(--x-factor))
+				calc(10% + var(--y-factor));
 		}
 
 		&:last-of-type {
 			right: 0;
 			rotate: 3deg;
-			translate: 120px -10%;
+			translate: calc(var(--x-offset) + var(--x-factor))
+				calc(-10% + var(--y-factor));
+		}
+	}
+
+	@keyframes blockIn {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
 		}
 	}
 
@@ -132,8 +204,12 @@
 			fill: var(--brand-pink);
 			width: 40px;
 			height: 40px;
+			opacity: 0;
 
 			translate: -4vmin;
+
+			animation: blockIn 0.1s forwards;
+			animation-delay: var(--delay);
 
 			@media (min-width: 1440px) {
 				width: 80px;
@@ -147,7 +223,7 @@
 		max-width: 90%;
 
 		@media (min-width: 1440px) {
-			margin-bottom: 20vh;
+			margin-bottom: 16vh;
 		}
 
 		@media (max-width: 1000px) {
