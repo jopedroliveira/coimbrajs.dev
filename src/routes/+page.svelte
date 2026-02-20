@@ -57,6 +57,13 @@
 	});
 </script>
 
+<h1 class="sr-only">Coimbra.js — JavaScript Meetup in Coimbra, Portugal</h1>
+<p class="sr-only">
+	Free JavaScript community meetup in Coimbra, Portugal. Join us for talks and networking on
+	February 24, 2026 at Pink Room, R. Casal de Vagares 15. Powered by Subvisual, Remote Crew, and
+	Pink Room.
+</p>
+
 <div class="wrapper">
 	<svg class="svg">
 		{#each positions as pos, idx (idx)}
@@ -74,7 +81,7 @@
 					parenXShift}px; --y-factor: {tweenLeft.current[1] *
 					parenYShift}px"
 			/>
-			<img src={logo} alt="Coimbra.js" class="logo" />
+			<img src={logo} alt="Coimbra.js - JavaScript Meetup in Coimbra, Portugal" class="logo" />
 			<img
 				src={paren_right}
 				alt=")"
@@ -90,7 +97,7 @@
 			src="https://luma.com/embed/event/evt-5ECNA9iNMrr6ynW/simple"
 			width="784"
 			height="400"
-			frameborder="0"
+			style="border: 0"
 			allow="fullscreen; payment"
 			aria-hidden="false"
 		></iframe>

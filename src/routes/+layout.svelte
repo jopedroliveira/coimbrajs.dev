@@ -42,6 +42,11 @@
 		content="https://coimbrajs.dev/og-image.png"
 	/>
 
+	<meta name="theme-color" content="#4a2930" />
+	<meta name="robots" content="index, follow" />
+	<meta name="geo.region" content="PT-06" />
+	<meta name="geo.placename" content="Coimbra" />
+	<meta name="geo.position" content="40.2033;-8.4103" />
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
