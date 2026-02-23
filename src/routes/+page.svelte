@@ -96,8 +96,8 @@
 			title="Luma event"
 			src="https://luma.com/embed/event/evt-5ECNA9iNMrr6ynW/simple"
 			width="784"
-			height="400"
-			style="border: 0"
+			height="450"
+			frameborder="0"
 			allow="fullscreen; payment"
 			aria-hidden="false"
 		></iframe>
@@ -113,7 +113,7 @@
 <style>
 	.wrapper {
 		position: relative;
-		height: 100%;
+		min-height: 100%;
 
 		display: flex;
 		flex-direction: column;
@@ -122,6 +122,10 @@
 
 		img {
 			z-index: 10;
+		}
+
+		@media (max-width: 480px) {
+			overflow-y: auto;
 		}
 	}
 
@@ -132,6 +136,11 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+
+		@media (max-width: 480px) {
+			justify-content: flex-start;
+			padding-top: 8px;
+		}
 	}
 
 	.branding {
@@ -147,6 +156,13 @@
 		height: 24px;
 		max-width: 90%;
 		margin-bottom: 10px;
+		flex-shrink: 0;
+
+		@media (max-width: 480px) {
+			height: 18px;
+			margin-bottom: 12px;
+			margin-top: 8px;
+		}
 
 		@media (min-width: 1440px) {
 			margin-bottom: 20px;
@@ -158,11 +174,17 @@
 	}
 
 	.logo {
-		max-width: 90%;
+		max-width: 80%;
 		width: 520px;
-		margin: 20px 0 20px 0;
+		margin: 16px 0;
+
+		@media (max-width: 480px) {
+			width: 280px;
+			margin: 12px 0;
+		}
 
 		@media (min-width: 1000px) {
+			max-width: 90%;
 			margin: 0 20px 10px;
 		}
 
@@ -228,6 +250,11 @@
 
 			translate: -4vmin;
 
+			@media (max-width: 480px) {
+				width: 24px;
+				height: 24px;
+			}
+
 			@media (min-width: 1440px) {
 				width: 80px;
 				height: 80px;
@@ -239,12 +266,18 @@
 		position: relative;
 		max-width: 90%;
 
-		@media (min-width: 1440px) {
-			margin-bottom: 16vh;
+		@media (max-width: 480px) {
+			width: 100%;
+			max-width: 95%;
+			height: 620px;
 		}
 
-		@media (max-width: 1000px) {
-			height: stretch;
+		@media (min-width: 481px) and (max-width: 1000px) {
+			height: 500px;
+		}
+
+		@media (min-width: 1440px) {
+			margin-bottom: 16vh;
 		}
 	}
 </style>
