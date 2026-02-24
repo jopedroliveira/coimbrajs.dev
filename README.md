@@ -11,6 +11,15 @@ npm run dev
 npm run dev -- --open
 ```
 
+## Routes
+
+- `/` — Home page
+- `/signage` — Redirects to `/signage/welcome`
+- `/signage/welcome` — Welcome slide
+- `/signage/opening` — Opening slide
+- `/signage/break` — Break slide
+- `/signage/thankyou` — Thank you slide
+
 ## Building
 
 To create a production version of your app:
